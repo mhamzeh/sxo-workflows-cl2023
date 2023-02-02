@@ -1,0 +1,780 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_023B0AJJE338K14zyegVRoLTr6SM2u5qOy2",
+    "name": "pod138-Parent",
+    "title": "pod138-Parent",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "observable_value",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_023B1B480CD6V5kAEvkcV0xj2nLX0YX4yq6",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "jsonpath_results",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_023B1570DMDMP7K5SMWnZrAdA37boz7hKyF",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "input",
+          "name": "observable_type",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_023B1AWQZHMTM2atiZlVWdREe2FtvPMyaaD",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "",
+          "scope": "local",
+          "name": "results_loop",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_023B0QRG8PI4A15JsPfNCRrRzdKjr7kr8Mr",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "Bret",
+          "scope": "local",
+          "name": "username",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_023B0BSPH5XA60wuwHTqRhAnrrb8qDQW8Xp",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "is_atomic": false
+      },
+      "delete_workflow_instance": false,
+      "display_name": "pod138-Parent",
+      "runtime_user": {
+        "target_default": true
+      },
+      "target": {
+        "target_type": "web-service.endpoint",
+        "target_id": "definition_target_023AZVW7EI93A41hgd0xvmNVRxw5B9IYQD2",
+        "execute_on_workflow_target": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_023B0AXIYM1M030OdxdmwIqBBAShU3t34Bh",
+        "name": "pod138-HTTP-Atomic",
+        "title": "pod138-HTTP-Atomic",
+        "type": "workflow.atomic_workflow",
+        "base_type": "subworkflow",
+        "properties": {
+          "display_name": "pod138-HTTP-Atomic",
+          "input": {
+            "variable_workflow_023B00NXJL5DZ3qtiKEl5MxDfcP9o6VA2vO": "users"
+          },
+          "runtime_user": {
+            "target_default": true
+          },
+          "target": {
+            "execute_on_this_target": true,
+            "target_id": "definition_target_023AZVW7EI93A41hgd0xvmNVRxw5B9IYQD2",
+            "target_type": "web-service.endpoint"
+          },
+          "workflow_id": "definition_workflow_023AZZHRC847R3LrVCE6WUnjx4WEvV5NDfJ",
+          "workflow_name": "pod138-HTTP-Atomic"
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_023B0C1G92VNA72bjpBLzb9K8Bj5LgFbIZ0",
+        "name": "Read Table from JSON",
+        "title": "Read Users Into Take",
+        "type": "corejava.read_table_from_json",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": false,
+          "display_name": "Read Users Into Take",
+          "input_json": "$activity.definition_activity_023B0AXIYM1M030OdxdmwIqBBAShU3t34Bh.output.variable_workflow_023B00YNQ84XV3PUu1JerYAitBJIpSOSSrg$",
+          "jsonpath_query": "$.",
+          "persist_output": true,
+          "populate_columns": false,
+          "skip_execution": false,
+          "table_columns": [
+            {
+              "column_name": "username",
+              "column_type": "string"
+            },
+            {
+              "column_name": "name",
+              "column_type": "string"
+            }
+          ]
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_023B0ESKC2RVS330CSIS5oBpFpxIsY1USyO",
+        "name": "Add API Results to DB ",
+        "title": "Add API Results to DB ",
+        "type": "workflow.atomic_workflow",
+        "base_type": "subworkflow",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Add API Results to DB ",
+          "input": {
+            "variable_workflow_01P0GS2SYRNAD5djU4I0EmDyh4Y5moK99Mr": "CiscoLive2023",
+            "variable_workflow_01P0GS9ADS0FB2p5ZH16T37LUc5yub2YWhi": "Pod138",
+            "variable_workflow_01P0GSK7IBUCF1egLmUv3sAxTwOtmvwiqus": "{\n\"workflowId\": \"023B0AJJ8MXVU0Ub2B9ippKltV8R3WXmrey\",\n\"output\": $activity.definition_activity_023B0AXIYM1M030OdxdmwIqBBAShU3t34Bh.output.variable_workflow_023B00YNQ84XV3PUu1JerYAitBJIpSOSSrg$,\n\"$currentDate\": { \"lastModified\": true}\n}",
+            "variable_workflow_01Q8N6BMRXR1F4IwAmNFn19l4XpB4LuqUWg": false
+          },
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "execute_on_this_target": true,
+            "target_id": "definition_target_01XRDVM4WWH4B6v4FSxN6q8ZJzj0kZcTYZ8",
+            "target_type": "web-service.endpoint"
+          },
+          "workflow_id": "definition_workflow_01P0GR3W6BLFK0lH4HekJSKaPcftY2an66W",
+          "workflow_name": "Create_Document_In_Mongo-RestHeart"
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_023B0KFN3PDCM2JC4kQa1k68hIaXJgnA5pt",
+        "name": "For Each",
+        "title": "For Each Username",
+        "type": "logic.for_each",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "For Each Username",
+          "skip_execution": false,
+          "source_array": "$activity.definition_activity_023B0C1G92VNA72bjpBLzb9K8Bj5LgFbIZ0.output.read_table_from_json$"
+        },
+        "object_type": "definition_activity",
+        "actions": [
+          {
+            "unique_name": "definition_activity_023B0MBLF3BT20PR1ppFe3O0sTI9iuB4gbI",
+            "name": "Condition Block",
+            "title": "If Username Found?",
+            "type": "logic.if_else",
+            "base_type": "activity",
+            "properties": {
+              "continue_on_failure": false,
+              "display_name": "If Username Found?",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "blocks": [
+              {
+                "unique_name": "definition_activity_023B0MBLXHI9Z4pngkXg5EJvjcmMIlJW7SI",
+                "name": "Condition Branch",
+                "title": "Then",
+                "type": "logic.condition_block",
+                "base_type": "activity",
+                "properties": {
+                  "condition": {
+                    "left_operand": "$workflow.definition_workflow_023B0AJJE338K14zyegVRoLTr6SM2u5qOy2.local.variable_workflow_023B0BSPH5XA60wuwHTqRhAnrrb8qDQW8Xp$",
+                    "operator": "eq",
+                    "right_operand": "$activity.definition_activity_023B0KFN3PDCM2JC4kQa1k68hIaXJgnA5pt.input.source_array[@].username$"
+                  },
+                  "continue_on_failure": false,
+                  "display_name": "Then",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_023B0QTCX3Z1C7RaMJ1Jb5ky5pWpuVeSj7Y",
+                    "name": "Set Variables",
+                    "title": "Set Local Loop Results",
+                    "type": "core.set_multiple_variables",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "display_name": "Set Local Loop Results",
+                      "skip_execution": false,
+                      "variables_to_update": [
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_023B0AJJE338K14zyegVRoLTr6SM2u5qOy2.local.variable_workflow_023B0QRG8PI4A15JsPfNCRrRzdKjr7kr8Mr$",
+                          "variable_value_new": "We found name $activity.definition_activity_023B0KFN3PDCM2JC4kQa1k68hIaXJgnA5pt.input.source_array[@].name$ by their username $activity.definition_activity_023B0KFN3PDCM2JC4kQa1k68hIaXJgnA5pt.input.source_array[@].username$"
+                        }
+                      ]
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_023B0RU0FGXMS0i5sRLZ7WJZmMFLnLGRblm",
+                    "name": "Write File",
+                    "title": "Write the results to the linux box",
+                    "type": "terminal.write_file",
+                    "base_type": "activity",
+                    "properties": {
+                      "action_timeout": 180,
+                      "content": "We found name $activity.definition_activity_023B0KFN3PDCM2JC4kQa1k68hIaXJgnA5pt.input.source_array[@].name$ by their username $activity.definition_activity_023B0KFN3PDCM2JC4kQa1k68hIaXJgnA5pt.input.source_array[@].username$",
+                      "continue_on_failure": false,
+                      "display_name": "Write the results to the linux box",
+                      "encoding": "utf-8",
+                      "file_name": "Pod138-basic-workflow-results.txt",
+                      "options": "append",
+                      "runtime_user": {
+                        "target_default": true
+                      },
+                      "skip_execution": false,
+                      "target": {
+                        "override_workflow_target": true,
+                        "target_id": "definition_target_01MPT315QSRB95qiHsdqdynSVPq7PObx21M"
+                      }
+                    },
+                    "object_type": "definition_activity"
+                  }
+                ]
+              },
+              {
+                "unique_name": "definition_activity_023B0MBM8V5R3670MLAcPdBSBTFlAXfbVmI",
+                "name": "Condition Branch",
+                "title": "Else",
+                "type": "logic.condition_block",
+                "base_type": "activity",
+                "properties": {
+                  "condition": {
+                    "left_operand": "$workflow.definition_workflow_023B0AJJE338K14zyegVRoLTr6SM2u5qOy2.local.variable_workflow_023B0BSPH5XA60wuwHTqRhAnrrb8qDQW8Xp$",
+                    "operator": "ne",
+                    "right_operand": "$activity.definition_activity_023B0KFN3PDCM2JC4kQa1k68hIaXJgnA5pt.input.source_array[@].username$"
+                  },
+                  "continue_on_failure": false,
+                  "display_name": "Else",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_023B0QN1ZH4483EYWqYfTqS8bYGzhUi3h1s",
+                    "name": "Continue",
+                    "title": "Continue",
+                    "type": "logic.continue",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "display_name": "Continue",
+                      "skip_execution": false
+                    },
+                    "object_type": "definition_activity"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "unique_name": "definition_activity_023B0UR0XPATK3e7OB18bBAZwW5M9ginWZt",
+        "name": "Get_Documents_From_Mongo-RestHeart",
+        "title": "Get_Documents_From_Mongo-RestHeart",
+        "type": "workflow.atomic_workflow",
+        "base_type": "subworkflow",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "Get_Documents_From_Mongo-RestHeart",
+          "input": {
+            "variable_workflow_01P0HCYYCM2837eJCqDZuSKVosi6YMeZA4X": "CiscoLive2023",
+            "variable_workflow_01P0HD6TPPKMK2XJvR7rnTLzLKtlSjmiXsH": "Pod138",
+            "variable_workflow_01P0HEJVT3EPP5hgPXBNNn5wjxlCCoHtPKU": "",
+            "variable_workflow_01P0IYVS9ALMY45mSfXnCta3HgsZ4LST1y3": "",
+            "variable_workflow_01P0J1A1GZTT93CpJlmIRYJZjxU3mTJiOOx": "",
+            "variable_workflow_01P0J1LX7AMWJ7ZMrDUVjRtkjGSEa9btFDS": "",
+            "variable_workflow_01P0JGFZP8CQO08hHdK0ttH75ExJdv9qByt": "",
+            "variable_workflow_01P0KYCFP07GV3VjQiwMip6dg0IvnJW8c0Q": false
+          },
+          "runtime_user": {
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "override_workflow_target": true,
+            "target_id": "definition_target_01XRDVM4WWH4B6v4FSxN6q8ZJzj0kZcTYZ8",
+            "target_type": "web-service.endpoint"
+          },
+          "workflow_id": "definition_workflow_01P0HBSJZQT0I3g3jkB3LUpwPWQRdLPdwER",
+          "workflow_name": "Get_Documents_From_Mongo-RestHeart"
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_023B0X1WPMQQZ0iiuRbMIVksJiVnPwiEUcG",
+        "name": "JSONPath Query",
+        "title": "Find User",
+        "type": "corejava.jsonpathquery",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": true,
+          "display_name": "Find User",
+          "input_json": "$activity.definition_activity_023B0UR0XPATK3e7OB18bBAZwW5M9ginWZt.output.variable_workflow_01P0IIOM2EO0J6mldzZf1ET7lfOkqiHQ6aB$",
+          "jsonpath_queries": [
+            {
+              "jsonpath_query": "$..[?(@.username==\"$workflow.definition_workflow_023B0AJJE338K14zyegVRoLTr6SM2u5qOy2.local.variable_workflow_023B0BSPH5XA60wuwHTqRhAnrrb8qDQW8Xp$\")]",
+              "jsonpath_query_name": "username",
+              "jsonpath_query_type": "string",
+              "zdate_type_format": "yyyy-MM-dd'T'HH:mm:ssZ"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_023B0ZP10T5O25zKZCdpnqaz9gNrgyuseth",
+        "name": "Execute Python Script",
+        "title": "Find user by their username",
+        "type": "python3.script",
+        "base_type": "activity",
+        "properties": {
+          "action_timeout": 180,
+          "continue_on_failure": true,
+          "display_name": "Find user by their username",
+          "script": "import json\nimport sys\n\ntry:\n    blocks = json.loads(sys.argv[1])\n    for block in blocks:\n       if block['name']:\n           output = block['name']\n       else:\n           output = \"No Name Found.\"\nexcept:\n    output = \"No Name Found\"",
+          "script_arguments": [
+            "$activity.definition_activity_023B0X1WPMQQZ0iiuRbMIVksJiVnPwiEUcG.output.jsonpath_queries.username$"
+          ],
+          "script_queries": [
+            {
+              "script_query": "output",
+              "script_query_name": "name_of_person",
+              "script_query_type": "string"
+            }
+          ],
+          "skip_execution": false
+        },
+        "object_type": "definition_activity"
+      },
+      {
+        "unique_name": "definition_activity_023B139V9DRR56zQLqGIeUBu2BOqfiR4ks5",
+        "name": "Condition Block",
+        "title": "If Username Is Found?",
+        "type": "logic.if_else",
+        "base_type": "activity",
+        "properties": {
+          "continue_on_failure": false,
+          "display_name": "If Username Is Found?",
+          "skip_execution": false
+        },
+        "object_type": "definition_activity",
+        "blocks": [
+          {
+            "unique_name": "definition_activity_023B139VLL2B93NlYKsmKecx70eNRJz8FzZ",
+            "name": "Condition Branch",
+            "title": "Then",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_023B0X1WPMQQZ0iiuRbMIVksJiVnPwiEUcG.output.succeeded$",
+                "operator": "eq",
+                "right_operand": true
+              },
+              "continue_on_failure": false,
+              "display_name": "Then",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_023B16Y17EXNU0FqYMLangeO3wMT5OsRuK9",
+                "name": "Group",
+                "title": "Handle Results",
+                "type": "logic.group",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Handle Results",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_023B15845Z8J74zUcfNPlNG4tomCaISD7pj",
+                    "name": "Set Variables",
+                    "title": "Set Jsonpath Results",
+                    "type": "core.set_multiple_variables",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "display_name": "Set Jsonpath Results",
+                      "skip_execution": false,
+                      "variables_to_update": [
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_023B0AJJE338K14zyegVRoLTr6SM2u5qOy2.local.variable_workflow_023B1570DMDMP7K5SMWnZrAdA37boz7hKyF$",
+                          "variable_value_new": "We found name $activity.definition_activity_023B0ZP10T5O25zKZCdpnqaz9gNrgyuseth.output.script_queries.name_of_person$ by their username $workflow.definition_workflow_023B0AJJE338K14zyegVRoLTr6SM2u5qOy2.local.variable_workflow_023B0BSPH5XA60wuwHTqRhAnrrb8qDQW8Xp$"
+                        }
+                      ]
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_023B160XURE5A2kaignFzglViNBPDDZGWbH",
+                    "name": "Send Email",
+                    "title": "Send the results to Moh",
+                    "type": "email.smtp_send_email",
+                    "base_type": "activity",
+                    "properties": {
+                      "action_timeout": 180,
+                      "body": "We found name $activity.definition_activity_023B0ZP10T5O25zKZCdpnqaz9gNrgyuseth.output.script_queries.name_of_person$ by their username $workflow.definition_workflow_023B0AJJE338K14zyegVRoLTr6SM2u5qOy2.local.variable_workflow_023B0BSPH5XA60wuwHTqRhAnrrb8qDQW8Xp$",
+                      "continue_if_one_address_valid": false,
+                      "continue_on_failure": false,
+                      "display_name": "Send the results to Moh",
+                      "runtime_user": {
+                        "target_default": true
+                      },
+                      "skip_execution": false,
+                      "subject": "SXO Pod138 Results",
+                      "target": {
+                        "override_workflow_target": true,
+                        "target_id": "definition_target_023AZXH51ZWA53WKpJcfkre8Co9hPMar8uo"
+                      },
+                      "to": "mhamzeh@cisco.com"
+                    },
+                    "object_type": "definition_activity"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "unique_name": "definition_activity_023B139VXL03S7FM8xD4Cf4o20KK3544Af7",
+            "name": "Condition Branch",
+            "title": "Else",
+            "type": "logic.condition_block",
+            "base_type": "activity",
+            "properties": {
+              "condition": {
+                "left_operand": "$activity.definition_activity_023B0X1WPMQQZ0iiuRbMIVksJiVnPwiEUcG.output.succeeded$",
+                "operator": "eq",
+                "right_operand": false
+              },
+              "continue_on_failure": false,
+              "display_name": "Else",
+              "skip_execution": false
+            },
+            "object_type": "definition_activity",
+            "actions": [
+              {
+                "unique_name": "definition_activity_023B179YQ5QDX2kwbiPE4StuIr9GIrTOlIF",
+                "name": "Group",
+                "title": "Handle Results",
+                "type": "logic.group",
+                "base_type": "activity",
+                "properties": {
+                  "continue_on_failure": false,
+                  "display_name": "Handle Results",
+                  "skip_execution": false
+                },
+                "object_type": "definition_activity",
+                "actions": [
+                  {
+                    "unique_name": "definition_activity_023B179YQ8DEP2ypzlgFKXo8O6iEMrnhqTf",
+                    "name": "Set Variables",
+                    "title": "Set Jsonpath Results",
+                    "type": "core.set_multiple_variables",
+                    "base_type": "activity",
+                    "properties": {
+                      "continue_on_failure": false,
+                      "display_name": "Set Jsonpath Results",
+                      "skip_execution": false,
+                      "variables_to_update": [
+                        {
+                          "variable_to_update": "$workflow.definition_workflow_023B0AJJE338K14zyegVRoLTr6SM2u5qOy2.local.variable_workflow_023B1570DMDMP7K5SMWnZrAdA37boz7hKyF$",
+                          "variable_value_new": "no name found by username $workflow.definition_workflow_023B0AJJE338K14zyegVRoLTr6SM2u5qOy2.local.variable_workflow_023B0BSPH5XA60wuwHTqRhAnrrb8qDQW8Xp$"
+                        }
+                      ]
+                    },
+                    "object_type": "definition_activity"
+                  },
+                  {
+                    "unique_name": "definition_activity_023B179YQAQFQ3DIzhXmBgYJPxB6mEmnFvY",
+                    "name": "Send Email",
+                    "title": "Send the results to Moh",
+                    "type": "email.smtp_send_email",
+                    "base_type": "activity",
+                    "properties": {
+                      "action_timeout": 180,
+                      "body": "no name found by username $workflow.definition_workflow_023B0AJJE338K14zyegVRoLTr6SM2u5qOy2.local.variable_workflow_023B0BSPH5XA60wuwHTqRhAnrrb8qDQW8Xp$",
+                      "continue_if_one_address_valid": false,
+                      "continue_on_failure": false,
+                      "display_name": "Send the results to Moh",
+                      "runtime_user": {
+                        "target_default": true
+                      },
+                      "skip_execution": false,
+                      "subject": "SXO Pod138 Results",
+                      "target": {
+                        "override_workflow_target": true,
+                        "target_id": "definition_target_023AZXH51ZWA53WKpJcfkre8Co9hPMar8uo"
+                      },
+                      "to": "mhamzeh@cisco.com"
+                    },
+                    "object_type": "definition_activity"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "categories": [
+      "category_01FM7CGPZZCMY0KcvgiGjVH5UaB4y4aDJ7m",
+      "category_023B006IC19JZ3PHQOARm3s04gMRXrxDJt0"
+    ]
+  },
+  "categories": {
+    "category_01FM7CGPZZCMY0KcvgiGjVH5UaB4y4aDJ7m": {
+      "unique_name": "category_01FM7CGPZZCMY0KcvgiGjVH5UaB4y4aDJ7m",
+      "name": "response",
+      "title": "response",
+      "type": "basic.category",
+      "base_type": "category",
+      "category_type": "custom",
+      "object_type": "category"
+    },
+    "category_023B006IC19JZ3PHQOARm3s04gMRXrxDJt0": {
+      "unique_name": "category_023B006IC19JZ3PHQOARm3s04gMRXrxDJt0",
+      "name": "pod138",
+      "title": "pod138",
+      "type": "basic.category",
+      "base_type": "category",
+      "category_type": "custom",
+      "object_type": "category"
+    }
+  },
+  "triggers": {
+    "triggerschedule_023B19SOG3H484DNxgkiHrwDP0fMgHYnxlx": {
+      "workflow_id": "definition_workflow_023B0AJJE338K14zyegVRoLTr6SM2u5qOy2",
+      "name": "Pod138-Trigger",
+      "title": "",
+      "lowercase_name": "schedule.pod138-trigger",
+      "type": "schedule",
+      "base_type": "trigger",
+      "ref_id": "schedule_023B19KPA80FM0jU1f8SD7atmSRLJIQehuC",
+      "version": "1.0.0",
+      "disabled": false,
+      "unique_name": "triggerschedule_023B19SOG3H484DNxgkiHrwDP0fMgHYnxlx",
+      "object_type": "triggerschedule"
+    }
+  },
+  "schedules": {
+    "schedule_023B19KPA80FM0jU1f8SD7atmSRLJIQehuC": {
+      "unique_name": "schedule_023B19KPA80FM0jU1f8SD7atmSRLJIQehuC",
+      "name": "Pod138-schedule",
+      "type": "basic.schedule",
+      "base_type": "schedule",
+      "properties": {
+        "calendar": "calendar_recurring_1BMfMWvgiDhSjBQ7hTSyvz3NyVZ",
+        "timezone": "Etc/GMT+0",
+        "starttime": "00:00",
+        "interval_hours": 1,
+        "interval_minutes": 0,
+        "number_of_times": 23,
+        "display_name": "Pod138-schedule",
+        "description": ""
+      },
+      "version": "1.0.0",
+      "object_type": "schedule"
+    }
+  },
+  "targets": {
+    "definition_target_01MPT315QSRB95qiHsdqdynSVPq7PObx21M": {
+      "unique_name": "definition_target_01MPT315QSRB95qiHsdqdynSVPq7PObx21M",
+      "name": "Linux Box - CiscoLive2023",
+      "title": "Linux Box - CiscoLive2023",
+      "type": "terminal.unix_linux_endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "bash_shell": "/bin/bash",
+        "default_runtime_user_id": "definition_runtime_user_01MPT2ZMA0B1K3ysSncQpGzy0U3F6b4vwck",
+        "display_name": "Linux Box - CiscoLive2023",
+        "host": "54.242.147.101",
+        "port": 22
+      }
+    },
+    "definition_target_01XRDVM4WWH4B6v4FSxN6q8ZJzj0kZcTYZ8": {
+      "unique_name": "definition_target_01XRDVM4WWH4B6v4FSxN6q8ZJzj0kZcTYZ8",
+      "name": "Mongo-RestHeart-API-Target-CL2023",
+      "title": "Mongo-RestHeart-API-Target-CL2023",
+      "type": "web-service.endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "ao_remote_id": "0234BLAIFOCAP2q0ZyydXp1fz0R1HZCJcuh",
+        "default_runtime_user_id": "definition_runtime_user_01OY3U05D9AEN53MgdZYcq8VtQgtNBlB4PF",
+        "disable_certificate_validation": false,
+        "display_name": "Mongo-RestHeart-API-Target-CL2023",
+        "host": "173.37.29.47",
+        "ignore_proxy": false,
+        "no_runtime_user": false,
+        "port": 8080,
+        "protocol": "http"
+      }
+    },
+    "definition_target_023AZVW7EI93A41hgd0xvmNVRxw5B9IYQD2": {
+      "unique_name": "definition_target_023AZVW7EI93A41hgd0xvmNVRxw5B9IYQD2",
+      "name": "pod138-HTTP Target",
+      "title": "pod138-HTTP Target",
+      "type": "web-service.endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "default_runtime_user_id": "definition_runtime_user_023AZV3J5KTYA2nFkvBV5O7rWhus7rw2uGb",
+        "disable_certificate_validation": true,
+        "display_name": "pod138-HTTP Target",
+        "host": "jsonplaceholder.typicode.com",
+        "ignore_proxy": false,
+        "no_runtime_user": false,
+        "port": 443,
+        "protocol": "https"
+      }
+    },
+    "definition_target_023AZXH51ZWA53WKpJcfkre8Co9hPMar8uo": {
+      "unique_name": "definition_target_023AZXH51ZWA53WKpJcfkre8Co9hPMar8uo",
+      "name": "pod138-SMTP-Target",
+      "title": "pod138-SMTP-Target",
+      "type": "email.smtp_endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "default_runtime_user_id": "definition_runtime_user_023AZX7LQJHB57AxPlN5rQWFMH78Rkb2KtC",
+        "display_name": "pod138-SMTP-Target",
+        "no_runtime_user": false,
+        "port": 587,
+        "protocol": "SMTP",
+        "server": "smtp.gmail.com"
+      }
+    }
+  },
+  "runtime_users": {
+    "definition_runtime_user_01MPT2ZMA0B1K3ysSncQpGzy0U3F6b4vwck": {
+      "unique_name": "definition_runtime_user_01MPT2ZMA0B1K3ysSncQpGzy0U3F6b4vwck",
+      "name": "Linux Account Keys",
+      "title": "Linux Account Keys",
+      "type": "runtime_user.terminal_password_credentials",
+      "base_type": "runtime_user",
+      "object_type": "definition_runtime_user",
+      "properties": {
+        "display_name": "Linux Account Keys",
+        "password": "*****",
+        "user": "sxo"
+      }
+    },
+    "definition_runtime_user_01OY3U05D9AEN53MgdZYcq8VtQgtNBlB4PF": {
+      "unique_name": "definition_runtime_user_01OY3U05D9AEN53MgdZYcq8VtQgtNBlB4PF",
+      "name": "CX Mongo Lab User",
+      "title": "CX Mongo Lab User",
+      "type": "runtime_user.web-service_basic_credentials",
+      "base_type": "runtime_user",
+      "object_type": "definition_runtime_user",
+      "properties": {
+        "auth_option": "Basic",
+        "basic_password": "*****",
+        "basic_username": "admin",
+        "display_name": "CX Mongo Lab User"
+      }
+    },
+    "definition_runtime_user_023AZV3J5KTYA2nFkvBV5O7rWhus7rw2uGb": {
+      "unique_name": "definition_runtime_user_023AZV3J5KTYA2nFkvBV5O7rWhus7rw2uGb",
+      "name": "pod138-HTTP Account",
+      "title": "pod138-HTTP Account",
+      "type": "runtime_user.web-service_basic_credentials",
+      "base_type": "runtime_user",
+      "object_type": "definition_runtime_user",
+      "properties": {
+        "auth_option": "Basic",
+        "basic_password": "*****",
+        "basic_username": "test",
+        "display_name": "pod138-HTTP Account"
+      }
+    },
+    "definition_runtime_user_023AZX7LQJHB57AxPlN5rQWFMH78Rkb2KtC": {
+      "unique_name": "definition_runtime_user_023AZX7LQJHB57AxPlN5rQWFMH78Rkb2KtC",
+      "name": "pod138-SMTP-Account",
+      "title": "pod138-SMTP-Account",
+      "type": "runtime_user.email_credentials",
+      "base_type": "runtime_user",
+      "object_type": "definition_runtime_user",
+      "properties": {
+        "display_name": "pod138-SMTP-Account",
+        "password": "*****",
+        "sender": "ciscoliveamsterdam2023@gmail.com"
+      }
+    }
+  },
+  "atomic_workflows": [
+    "definition_workflow_023AZZHRC847R3LrVCE6WUnjx4WEvV5NDfJ",
+    "definition_workflow_01P0GR3W6BLFK0lH4HekJSKaPcftY2an66W",
+    "definition_workflow_01P0HBSJZQT0I3g3jkB3LUpwPWQRdLPdwER"
+  ],
+  "remotemetas": {
+    "remote_meta_0234BLAIFQN750CzCljkJIuZZLTjMMUtXbU": {
+      "base_type": "remote_meta",
+      "type": "generic.remote_meta",
+      "name": "CiscoLIve2023_Remote",
+      "title": "CiscoLIve2023_Remote",
+      "version": "1.0.0",
+      "properties": {
+        "advanced": {
+          "require_advanced": false
+        },
+        "cloud_type": "vmware",
+        "display_name": "CiscoLIve2023_Remote",
+        "network": {
+          "dns_servers": "173.38.200.100,144.254.71.184",
+          "gateway": "10.48.64.1",
+          "ip_endpoint": "10.48.64.200/24",
+          "is_static_ip": true
+        },
+        "proxy": {
+          "proxy_url": "socks5://proxy.esl.cisco.com:1080",
+          "require_proxy": true
+        }
+      },
+      "unique_name": "remote_meta_0234BLAIFQN750CzCljkJIuZZLTjMMUtXbU",
+      "object_type": "remote_meta"
+    }
+  },
+  "dependent_workflows": [
+    "definition_workflow_023AZZHRC847R3LrVCE6WUnjx4WEvV5NDfJ",
+    "definition_workflow_01P0GR3W6BLFK0lH4HekJSKaPcftY2an66W",
+    "definition_workflow_01P0HBSJZQT0I3g3jkB3LUpwPWQRdLPdwER"
+  ]
+}
